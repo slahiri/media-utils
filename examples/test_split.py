@@ -1,6 +1,6 @@
 """Test image generation using split files mode."""
 
-from image_gen import ImageGenerator
+from media_utils import ImageGenerator
 
 print("Initializing ImageGenerator (split mode)...")
 gen = ImageGenerator(mode="split")

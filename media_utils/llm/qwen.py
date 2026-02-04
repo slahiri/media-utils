@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-from image_gen.config import load_config, get_torch_dtype
+from media_utils.config import load_config, get_torch_dtype
 
 
 class QwenLLM:

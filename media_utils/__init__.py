@@ -1,7 +1,7 @@
-from image_gen.config import load_config
-from image_gen.image.generator import ImageGenerator
-from image_gen.llm.qwen import QwenLLM
-from image_gen.utils.downloader import (
+from media_utils.config import load_config
+from media_utils.image.generator import ImageGenerator
+from media_utils.llm.qwen import QwenLLM
+from media_utils.utils.downloader import (
     download_models,
     download_image_model,
     download_llm_model,

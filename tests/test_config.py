@@ -4,7 +4,7 @@ import os
 import pytest
 from pathlib import Path
 
-from image_gen.config import load_config, get_torch_dtype, DEFAULT_CONFIG_PATH
+from media_utils.config import load_config, get_torch_dtype, DEFAULT_CONFIG_PATH
 
 
 class TestLoadConfig:

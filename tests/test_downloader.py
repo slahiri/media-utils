@@ -4,7 +4,7 @@ import pytest
 from unittest.mock import MagicMock, patch, call
 from pathlib import Path
 
-from image_gen.utils.downloader import (
+from media_utils.utils.downloader import (
     download_image_model,
     download_image_model_pipeline,
     download_image_model_split,
@@ -35,7 +35,7 @@ class TestDownloadImageModelPipeline:
 
     def test_download_pipeline_basic(self, sample_config, mock_huggingface_hub):
         """Test basic pipeline download."""
-        with patch("image_gen.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
+        with patch("media_utils.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
             result = download_image_model_pipeline(sample_config)
 
             assert result == "/fake/path/to/model"
@@ -43,7 +43,7 @@ class TestDownloadImageModelPipeline:
 
     def test_download_pipeline_uses_config_model(self, sample_config, mock_huggingface_hub):
         """Test that pipeline download uses model from config."""
-        with patch("image_gen.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
+        with patch("media_utils.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
             download_image_model_pipeline(sample_config)
 
             call_kwargs = mock_huggingface_hub["snapshot_download"].call_args
@@ -51,7 +51,7 @@ class TestDownloadImageModelPipeline:
 
     def test_download_pipeline_with_model_override(self, sample_config, mock_huggingface_hub):
         """Test pipeline download with model name override."""
-        with patch("image_gen.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
+        with patch("media_utils.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
             download_image_model_pipeline(sample_config, model_name="custom/model")
 
             call_kwargs = mock_huggingface_hub["snapshot_download"].call_args
@@ -63,7 +63,7 @@ class TestDownloadImageModelSplit:
 
     def test_download_split_downloads_all_files(self, sample_config, mock_huggingface_hub):
         """Test that split download fetches all component files."""
-        with patch("image_gen.utils.downloader.hf_hub_download", mock_huggingface_hub["hf_hub_download"]):
+        with patch("media_utils.utils.downloader.hf_hub_download", mock_huggingface_hub["hf_hub_download"]):
             result = download_image_model_split(sample_config)
 
             # Should download 3 files: text_encoder, diffusion_model, vae
@@ -74,7 +74,7 @@ class TestDownloadImageModelSplit:
 
     def test_download_split_uses_correct_repo(self, sample_config, mock_huggingface_hub):
         """Test that split download uses correct repo ID."""
-        with patch("image_gen.utils.downloader.hf_hub_download", mock_huggingface_hub["hf_hub_download"]):
+        with patch("media_utils.utils.downloader.hf_hub_download", mock_huggingface_hub["hf_hub_download"]):
             download_image_model_split(sample_config)
 
             # Check all calls use the correct repo
@@ -89,7 +89,7 @@ class TestDownloadImageModelSplit:
 
         mock_huggingface_hub["hf_hub_download"].return_value = str(fake_cached_file)
 
-        with patch("image_gen.utils.downloader.hf_hub_download", mock_huggingface_hub["hf_hub_download"]):
+        with patch("media_utils.utils.downloader.hf_hub_download", mock_huggingface_hub["hf_hub_download"]):
             result = download_image_model_split(sample_config, copy_to_local=True)
 
             # Should have local paths in result
@@ -103,14 +103,14 @@ class TestDownloadImageModel:
 
     def test_download_image_model_pipeline_mode(self, sample_config, mock_huggingface_hub):
         """Test download_image_model with pipeline mode."""
-        with patch("image_gen.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
+        with patch("media_utils.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
             result = download_image_model(sample_config, mode="pipeline")
 
             assert result == "/fake/path/to/model"
 
     def test_download_image_model_split_mode(self, sample_config, mock_huggingface_hub):
         """Test download_image_model with split mode."""
-        with patch("image_gen.utils.downloader.hf_hub_download", mock_huggingface_hub["hf_hub_download"]):
+        with patch("media_utils.utils.downloader.hf_hub_download", mock_huggingface_hub["hf_hub_download"]):
             result = download_image_model(sample_config, mode="split")
 
             assert isinstance(result, dict)
@@ -126,7 +126,7 @@ class TestDownloadLLMModel:
 
     def test_download_llm_basic(self, sample_config, mock_huggingface_hub):
         """Test basic LLM download."""
-        with patch("image_gen.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
+        with patch("media_utils.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
             result = download_llm_model(sample_config)
 
             assert result == "/fake/path/to/model"
@@ -134,7 +134,7 @@ class TestDownloadLLMModel:
 
     def test_download_llm_uses_config_model(self, sample_config, mock_huggingface_hub):
         """Test that LLM download uses model from config."""
-        with patch("image_gen.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
+        with patch("media_utils.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
             download_llm_model(sample_config)
 
             call_kwargs = mock_huggingface_hub["snapshot_download"].call_args
@@ -142,7 +142,7 @@ class TestDownloadLLMModel:
 
     def test_download_llm_with_model_override(self, sample_config, mock_huggingface_hub):
         """Test LLM download with model name override."""
-        with patch("image_gen.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
+        with patch("media_utils.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
             download_llm_model(sample_config, model_name="custom/llm")
 
             call_kwargs = mock_huggingface_hub["snapshot_download"].call_args
@@ -154,7 +154,7 @@ class TestDownloadModels:
 
     def test_download_models_downloads_both(self, sample_config, mock_huggingface_hub):
         """Test that download_models downloads both image and LLM models."""
-        with patch("image_gen.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
+        with patch("media_utils.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]):
             result = download_models(sample_config, image_mode="pipeline")
 
             assert "image" in result
@@ -164,8 +164,8 @@ class TestDownloadModels:
 
     def test_download_models_split_mode(self, sample_config, mock_huggingface_hub):
         """Test download_models with split mode for image."""
-        with patch("image_gen.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]), \
-             patch("image_gen.utils.downloader.hf_hub_download", mock_huggingface_hub["hf_hub_download"]):
+        with patch("media_utils.utils.downloader.snapshot_download", mock_huggingface_hub["snapshot_download"]), \
+             patch("media_utils.utils.downloader.hf_hub_download", mock_huggingface_hub["hf_hub_download"]):
             result = download_models(sample_config, image_mode="split")
 
             assert isinstance(result["image"], dict)  # Split returns dict

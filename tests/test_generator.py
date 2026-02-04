@@ -4,7 +4,7 @@ import pytest
 from unittest.mock import MagicMock, patch, PropertyMock
 from pathlib import Path
 
-from image_gen.image.generator import ImageGenerator
+from media_utils.image.generator import ImageGenerator
 
 
 class TestImageGeneratorInit:
@@ -35,10 +35,10 @@ class TestImageGeneratorInit:
         gen = ImageGenerator(config_path=sample_config, model_name="custom/model")
         assert gen.model_name == "custom/model"
 
-    def test_init_cpu_offload_flag(self, sample_config):
-        """Test CPU offload flag."""
-        gen = ImageGenerator(config_path=sample_config, enable_cpu_offload=True)
-        assert gen.enable_cpu_offload is True
+    def test_init_offload_mode(self, sample_config):
+        """Test offload mode setting."""
+        gen = ImageGenerator(config_path=sample_config, offload_mode="model")
+        assert gen.offload_mode == "model"
 
 
 class TestImageGeneratorPipeline:
@@ -49,7 +49,7 @@ class TestImageGeneratorPipeline:
         gen = ImageGenerator(config_path=sample_config)
         assert gen._pipeline is None
 
-    @patch("image_gen.image.generator.ZImagePipeline", create=True)
+    @patch("media_utils.image.generator.ZImagePipeline", create=True)
     def test_pipeline_loads_on_access(self, mock_pipeline_class, sample_config):
         """Test that pipeline loads when accessed."""
         # Setup mock
@@ -60,7 +60,7 @@ class TestImageGeneratorPipeline:
             gen = ImageGenerator(config_path=sample_config)
 
             # Patch the import inside _load_pipeline
-            with patch("image_gen.image.generator.ZImagePipeline", mock_pipeline_class, create=True):
+            with patch("media_utils.image.generator.ZImagePipeline", mock_pipeline_class, create=True):
                 # Access pipeline property - this would trigger loading
                 # We can't fully test this without the actual diffusers module
                 pass

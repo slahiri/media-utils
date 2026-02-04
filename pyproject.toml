@@ -3,13 +3,13 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "image-gen"
+name = "media-utils"
 version = "0.1.0"
-description = "Image generation with Z-Image-Turbo and LLM with Qwen"
+description = "Media utilities: Image generation with Z-Image-Turbo and LLM with Qwen"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
-keywords = ["image-generation", "z-image", "qwen", "llm", "diffusion", "ai"]
+keywords = ["image-generation", "z-image", "qwen", "llm", "diffusion", "ai", "media"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -44,13 +44,13 @@ python_functions = ["test_*"]
 addopts = "-v --tb=short"
 
 [project.urls]
-Homepage = "https://github.com/slahiri/image-gen"
-Repository = "https://github.com/slahiri/image-gen"
-Changelog = "https://github.com/slahiri/image-gen/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/slahiri/media-utils"
+Repository = "https://github.com/slahiri/media-utils"
+Changelog = "https://github.com/slahiri/media-utils/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["image_gen*"]
+include = ["media_utils*"]
 
 [tool.setuptools.package-data]
-image_gen = ["../config.yaml"]
+media_utils = ["../config.yaml"]

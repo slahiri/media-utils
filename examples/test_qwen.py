@@ -1,6 +1,6 @@
 """Test Qwen LLM generation."""
 
-from image_gen import QwenLLM
+from media_utils import QwenLLM
 
 print("Initializing QwenLLM...")
 llm = QwenLLM()

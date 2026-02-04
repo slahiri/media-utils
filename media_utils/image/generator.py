@@ -5,7 +5,7 @@ from typing import Any, Literal
 import torch
 from PIL import Image
 
-from image_gen.config import load_config, get_torch_dtype
+from media_utils.config import load_config, get_torch_dtype
 
 
 # Available schedulers for Z-Image
@@ -220,7 +220,7 @@ class ImageGenerator:
             self._pipeline = self._load_from_split_files(paths)
         elif self.mode == "split":
             # Load from HuggingFace cache (split files)
-            from image_gen.utils.downloader import get_split_file_paths
+            from media_utils.utils.downloader import get_split_file_paths
             paths = get_split_file_paths(self.config_path)
             self._pipeline = self._load_from_split_files(paths)
         else:

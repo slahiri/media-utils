@@ -1,4 +1,4 @@
-from image_gen.utils.downloader import (
+from media_utils.utils.downloader import (
     download_models,
     download_image_model,
     download_image_model_pipeline,

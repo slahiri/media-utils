@@ -4,7 +4,7 @@ from pathlib import Path
 
 from huggingface_hub import snapshot_download, hf_hub_download
 
-from image_gen.config import load_config
+from media_utils.config import load_config
 
 
 def get_project_root(config_path: str | Path | None = None) -> Path:
@@ -309,16 +309,16 @@ LLM Models
 Download Commands
 =================
   # Download all (pipeline mode)
-  python -m image_gen.utils.downloader all
+  python -m media_utils.utils.downloader all
 
   # Download all (split files, copy to local)
-  python -m image_gen.utils.downloader all split --local
+  python -m media_utils.utils.downloader all split --local
 
   # Download image model only (split files)
-  python -m image_gen.utils.downloader image split
+  python -m media_utils.utils.downloader image split
 
   # Download LLM only
-  python -m image_gen.utils.downloader llm
+  python -m media_utils.utils.downloader llm
 """)
 
 
@@ -328,7 +328,7 @@ if __name__ == "__main__":
     args = sys.argv[1:]
 
     if not args or args[0] == "help":
-        print("Usage: python -m image_gen.utils.downloader <command> [options]")
+        print("Usage: python -m media_utils.utils.downloader <command> [options]")
         print()
         print("Commands:")
         print("  list                    - List available models")

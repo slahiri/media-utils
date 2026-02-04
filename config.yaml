@@ -52,6 +52,6 @@ models:
 
 paths:
   # HuggingFace cache directory
-  cache_dir: "~/.cache/image_gen"
+  cache_dir: "~/.cache/media_utils"
   # Local models directory (relative to project root)
   models_dir: "./models"

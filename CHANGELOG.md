@@ -10,18 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial release
-- **Image Generation Module** (`image_gen.image.generator`)
+- **Image Generation Module** (`media_utils.image.generator`)
   - `ImageGenerator` class with Z-Image-Turbo support
   - Three loading modes: `pipeline`, `local`, `split`
   - Configurable generation parameters (steps, size, guidance scale)
   - Batch generation support
 
-- **LLM Module** (`image_gen.llm.qwen`)
+- **LLM Module** (`media_utils.llm.qwen`)
   - `QwenLLM` class with Qwen2.5-7B-Instruct support
   - Text generation and chat interfaces
   - Local model path support
 
-- **Model Downloader** (`image_gen.utils.downloader`)
+- **Model Downloader** (`media_utils.utils.downloader`)
   - Download from HuggingFace (pipeline or split files)
   - Copy to local `models/` folder
   - Support for quantized model variants (FP8, FP4)

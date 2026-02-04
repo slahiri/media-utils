@@ -1,6 +1,6 @@
 """Example usage of image-gen library."""
 
-from image_gen import ImageGenerator, QwenLLM, download_models, list_available_models
+from media_utils import ImageGenerator, QwenLLM, download_models, list_available_models
 
 
 def example_image_generation_pipeline():

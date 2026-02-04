@@ -4,7 +4,7 @@ import pytest
 from unittest.mock import MagicMock, patch
 from pathlib import Path
 
-from image_gen.llm.qwen import QwenLLM
+from media_utils.llm.qwen import QwenLLM
 
 
 class TestQwenLLMInit:

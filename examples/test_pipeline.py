@@ -1,6 +1,6 @@
 """Test image generation using pipeline mode with memory optimizations."""
 
-from image_gen import ImageGenerator
+from media_utils import ImageGenerator
 
 print("Available schedulers:", ImageGenerator.list_schedulers())
 print("Available resolutions:", ImageGenerator.list_resolutions())

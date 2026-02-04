@@ -1,6 +1,6 @@
-# image-gen
+# media-utils
 
-A Python library for image generation using Z-Image-Turbo and LLM text generation using Qwen.
+A Python library for media utilities including image generation using Z-Image-Turbo and LLM text generation using Qwen.
 
 ## Features
 
@@ -23,16 +23,16 @@ pip install -e .
 
 ```bash
 # Download all models (pipeline mode)
-python -m image_gen.utils.downloader all
+python -m media_utils.utils.downloader all
 
 # Or download split files and copy to local models/ folder
-python -m image_gen.utils.downloader all split --local
+python -m media_utils.utils.downloader all split --local
 ```
 
 ### 2. Generate Images
 
 ```python
-from image_gen import ImageGenerator
+from media_utils import ImageGenerator
 
 # Basic usage (with CPU offload for better GPU sharing)
 gen = ImageGenerator(mode="pipeline")
@@ -56,6 +56,7 @@ gen = ImageGenerator(
     # Memory optimization
     offload_mode="model",       # "none", "model" (recommended), "sequential"
     enable_vae_slicing=True,    # Reduce VAE memory
+    keep_loaded=True,           # Keep model loaded for multiple generations
     # Scheduler options
     scheduler="dpmpp_sde_karras",  # Better quality
     use_karras_sigmas=True,     # Better noise schedule
@@ -64,16 +65,28 @@ gen = ImageGenerator(
 image = gen.generate(
     prompt="A cyberpunk city at night",
     negative_prompt="blurry, low quality",
+    resolution="1344x768",      # 16:9 landscape
     num_inference_steps=8,      # 8-9 for Turbo
     guidance_scale=1.0,         # 1.0 for Turbo models
     seed=123,
 )
 ```
 
-### 4. Use LLM
+### 4. Context Manager (Auto Cleanup)
 
 ```python
-from image_gen import QwenLLM
+from media_utils import ImageGenerator
+
+with ImageGenerator() as gen:
+    image = gen.generate("A mountain landscape")
+    image.save("output/image.png")
+# Model automatically unloaded
+```
+
+### 5. Use LLM
+
+```python
+from media_utils import QwenLLM
 
 llm = QwenLLM()
 
@@ -96,6 +109,13 @@ Similar to ComfyUI, this library supports CPU offloading for efficient GPU usage
 | `"none"` | ~16GB | Fastest | Full model on GPU |
 | `"model"` | ~8-10GB | Good | Models move to GPU only when needed (default) |
 | `"sequential"` | ~4-6GB | Slowest | Maximum memory savings |
+
+## Model Lifecycle
+
+| `keep_loaded` | Behavior |
+|---------------|----------|
+| `True` (default) | Model stays loaded, call `unload()` manually |
+| `False` | Model unloads after each `generate()` call |
 
 ## Schedulers
 
@@ -168,7 +188,7 @@ image = gen.generate(prompt, width=1024, height=768)      # Individual params
 ## Project Structure
 
 ```
-image-generator/
+media-utils/
 ├── config.yaml              # Model configurations
 ├── pyproject.toml           # Package dependencies
 ├── output/                  # Generated images
@@ -177,7 +197,7 @@ image-generator/
 │   ├── diffusion_models/
 │   ├── vae/
 │   └── llm/
-├── image_gen/
+├── media_utils/
 │   ├── config.py            # Config loader
 │   ├── image/
 │   │   └── generator.py     # ImageGenerator class
@@ -197,16 +217,16 @@ image-generator/
 
 ```bash
 # List available models
-python -m image_gen.utils.downloader list
+python -m media_utils.utils.downloader list
 
 # Download all models
-python -m image_gen.utils.downloader all [pipeline|split] [--local]
+python -m media_utils.utils.downloader all [pipeline|split] [--local]
 
 # Download image model only
-python -m image_gen.utils.downloader image [pipeline|split] [--local]
+python -m media_utils.utils.downloader image [pipeline|split] [--local]
 
 # Download LLM only
-python -m image_gen.utils.downloader llm [--local]
+python -m media_utils.utils.downloader llm [--local]
 ```
 
 ## Requirements
