@@ -35,7 +35,7 @@ python -m media_utils.utils.downloader all
 ### 4. Run the agent
 
 ```bash
-python examples/test_agent.py
+python examples/example.py
 ```
 
 ## Usage
@@ -143,25 +143,6 @@ The agent uses Qwen to:
 2. Create a detailed, optimized prompt for image generation
 3. Choose appropriate settings (resolution, negative prompts)
 4. Execute the generation
-
-## CLI Commands
-
-```bash
-# Download models
-python -m media_utils.utils.downloader all
-
-# Run interactive agent
-python examples/test_agent.py
-
-# Run single generation
-python examples/test_agent.py single
-
-# Run direct generation (bypass LLM)
-python examples/test_agent.py direct
-
-# Run batch generation
-python examples/test_agent.py batch
-```
 
 ## Requirements
 
