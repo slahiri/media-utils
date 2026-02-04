@@ -141,6 +141,33 @@ response = llm.chat([
 ])
 ```
 
+### Use the Agent (LangGraph)
+
+```python
+from media_utils import MediaAgent
+
+# Initialize the agent
+agent = MediaAgent(
+    output_dir="output",
+    ocr_quantization="4bit",
+)
+
+# Generate image via natural language
+result = agent.run("Create an image of a sunset over mountains")
+print(result)  # "Image generated and saved to: output/generated_20260204_123456.png"
+
+# Extract text via natural language
+result = agent.run("Extract text from document.png")
+print(result)  # Extracted markdown text
+
+# Cleanup
+agent.unload()
+
+# Or use context manager
+with MediaAgent() as agent:
+    result = agent.run("Generate a cyberpunk city at night")
+```
+
 ## Memory Optimization
 
 Similar to ComfyUI, this library supports CPU offloading for efficient GPU usage:
@@ -258,6 +285,9 @@ media-utils/
 │   │   └── deepseek.py      # DeepSeekOCR class
 │   ├── llm/
 │   │   └── qwen.py          # QwenLLM class
+│   ├── agent/
+│   │   ├── graph.py         # MediaAgent (LangGraph)
+│   │   └── tools.py         # LangChain tools
 │   └── utils/
 │       └── downloader.py    # Model download utilities
 ├── examples/
@@ -265,6 +295,7 @@ media-utils/
 │   ├── test_split.py        # Test image generation (split files)
 │   ├── test_ocr.py          # Test OCR
 │   ├── test_qwen.py         # Test LLM
+│   ├── test_agent.py        # Test agent
 │   └── usage.py             # Full examples
 └── tests/                   # Unit tests
 ```
