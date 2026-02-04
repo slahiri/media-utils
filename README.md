@@ -11,15 +11,23 @@ A Python library for media utilities including image generation using Z-Image-Tu
 - **Flexible Loading**: HuggingFace pipeline, split files (ComfyUI-style), or local models
 - **Config-driven**: YAML configuration for models, paths, and generation defaults
 
-## Installation
+## Setup
+
+### 1. Create and activate virtual environment
 
 ```bash
-pip install -e .
+python -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# .venv\Scripts\activate   # Windows
 ```
 
-## Quick Start
+### 2. Install dependencies
 
-### 1. Download Models
+```bash
+uv pip install -e .
+```
+
+### 3. Download models
 
 ```bash
 # Download all models (pipeline mode)
@@ -29,7 +37,19 @@ python -m media_utils.utils.downloader all
 python -m media_utils.utils.downloader all split --local
 ```
 
-### 2. Generate Images
+### 4. Run an example
+
+```bash
+python examples/test_pipeline.py
+```
+
+### 5. Check the output
+
+Generated images are saved to the `output/` folder.
+
+## Quick Start
+
+### Generate Images
 
 ```python
 from media_utils import ImageGenerator
@@ -48,7 +68,7 @@ image.save("output/image.png")
 gen.unload()
 ```
 
-### 3. Advanced Options
+### Advanced Options
 
 ```python
 gen = ImageGenerator(
@@ -72,7 +92,7 @@ image = gen.generate(
 )
 ```
 
-### 4. Context Manager (Auto Cleanup)
+### Context Manager (Auto Cleanup)
 
 ```python
 from media_utils import ImageGenerator
@@ -83,7 +103,7 @@ with ImageGenerator() as gen:
 # Model automatically unloaded
 ```
 
-### 5. Use LLM
+### Use LLM
 
 ```python
 from media_utils import QwenLLM
@@ -234,6 +254,9 @@ python -m media_utils.utils.downloader llm [--local]
 - Python >= 3.10
 - CUDA-capable GPU (16GB+ VRAM recommended, 8GB with offloading)
 - PyTorch >= 2.0
+- uv (for fast package installation)[^1]
+
+[^1]: To install uv, see: https://docs.astral.sh/uv/getting-started/installation/
 
 ## License
 
